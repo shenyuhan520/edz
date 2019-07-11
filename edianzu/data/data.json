@@ -1,0 +1,51 @@
+[{
+    "src":"img2/k1.jpg",
+    "name":"全新 戴尔 3060SFF (i3-8100/4G/1T/核显/21.5寸)",
+    "price":"￥128/月",
+    "Id":"1"
+},{
+   "src":"img2/k2.jpg",
+   "name":"ThinkPad T420 (i5/4GB/500GB/核显)",
+   "price":"￥80/月",
+   "Id":"2"
+},{
+    "src":"img2/k3.jpg",
+   "name":"全新 惠普 ProOne 400 G4 (G4900T/4G/128G SSD/核显)",
+   "price":"￥105/月",
+   "Id":"3"
+},{
+    "src":"img2/k4.jpg",
+    "name":"全新 易点租 E33B Pro (i3-8100 3.6GHz/4G/240G SSD/核显/21.5寸)",
+    "price":"￥108/月",
+    "Id":"4"
+},{
+    "src":"img2/k5.jpg",
+    "name":"ThinkPad T440 (i5/8G/240G SSD/核显)",
+    "price":"￥128/月",
+    "Id":"5"
+},{
+    "src":"img2/k6.jpg",
+    "name":"全新 戴尔 3060SFF (i3-8100/4G/1T/核显/21.5寸)",
+    "price":"￥128/月",
+    "Id":"6"
+},{
+    "src":"img2/k7.jpg",
+    "name":"全新 易点租 P41 (i3-9100F/8G/240G SSD/2G/23.8寸)",
+    "price":"￥168/月",
+    "Id":"7"
+},{
+    "src":"img2/k8.jpg",
+    "name":"全新 易点租 P42 (i5-9400F/8G/240G SSD/2G/23.8寸)",
+    "price":"￥188/月",
+    "Id":"8"
+},{
+    "src":"img2/k9.jpg",
+    "name":"全新 苹果 iMac (i5 2.3G双核/8G/1T/核显)",
+    "price":"￥297/月",
+    "Id":"9"
+},{
+    "src":"img2/k10.jpg",
+    "name":"全新 ThinkPad L390 (i3-8145U/4G/128G SSD/核显)",
+    "price":"￥118/月",
+    "Id":"10"
+}]

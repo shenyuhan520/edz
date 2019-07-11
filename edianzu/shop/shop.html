@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/shop.css">
+    <link rel="stylesheet" href="../css/public.css">
+</head>
+  <style>
+      .tab img{
+            display:block;
+            height:120px;
+             width:120px;
+             margin:0 auto;
+      }
+      .td2{
+          text-align:center;
+          font:700 22px/120px "";
+      }
+      .td3{
+          text-align:center;
+          color:red;
+      }
+      .td4{text-align:center;}
+      .del{
+          width:100px;
+          font-size:30px;
+          text-align:center;
+          cursor: pointer;
+          color:#07f;
+        }
+        .toubu{
+            font:20px/40px ""
+        }
+        .hui{
+            position:absolute;
+            left:50px;
+            top:30px;
+        }
+        input{
+            display:block;
+            width:40px;
+            height:20px;
+            margin:0 auto;
+            padding-left:7px;
+            font-size:18px;
+        }
+        .box{width: 100%;height: 40px;display: flex;justify-content: center;}
+        .pagWarp{
+            height: 40px;
+            box-shadow: 0 2px 5px #b6b6b6;
+            border-radius: 2px;
+            display: flex;
+            justify-content: center;
+        }
+    #btnL,#btnR{
+        line-height: 40px;
+        cursor: pointer;
+    }
+    .pagWarp ul{        
+        height: 40px;
+        text-align: center;
+        padding-left: 40px;
+        padding-right: 40px;
+        display: flex;
+    }
+    .pagWarp ul li{
+        text-align: center;
+        line-height: 40px;
+        padding: 0 4px;
+    }
+    .active{
+        color: blue;
+        font-size: 24px;
+    }
+    .toubu{
+        background:#98a;
+        font:800 22px/40px "";
+       
+    }
+  </style>
+<body>
+    <h2></h2><a href=""></a>
+    <table border="1" cellspacing="0" width="1200" align="center" class="tab">
+      <thead>
+          <tr class="toubu">
+              <th>图片</th>
+              <th>名字</th>
+              <th>价格</th>
+              <th>数量</th>
+              <th>操作</th>
+          </tr>
+      </thead>
+      <tbody>
+          
+          <!-- <tr>
+              <td><input type="cheackbox"></td>
+               <td><img src="" alt=""></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td><span>删除</span></td>
+          </tr> -->
+      </tbody>
+    </table>
+    <a href="../libs/libs.html" class="hui"><img src="../img2/fanhui.jpg" alt="">返回</a>
+    
+</body>
+<script src="../js/jquery.2.2.4.js"></script>
+<script>
+    class Shop{
+        constructor(){
+            this.tbody = document.querySelector("tbody");
+            this.url = "http://localhost/1905/edianzu/data/data.json";
+          
+            this.init()
+            this.addEvent()
+
+        }
+        addEvent(){
+            var that = this;
+            this.tbody.onclick = function(eve){
+              var e = event || window.event;
+              var target = e.target || e.srcElement;
+              if(e.target.className == "del"){
+                 that.id =e.target.parentNode.getAttribute("index")
+                 e.target.parentNode.remove()//删除DOM元素
+                 //删除localstorage的数据
+                 that.removeDate()
+                }
+            }
+            this.tbody.oninput = function(eve){
+                var e = event || window.event;
+                var target = e.target || e.srcElement;
+                //    console.log(e.target)
+                if(e.target.className == "changeNum"){
+                    that.id = e.target.parentNode.parentNode.getAttribute("index");
+                    console.log(that.id)
+                   that.num = e.target.value;
+                //    console.log(that.num)
+                //    console.log(that.num)
+                   that.changeDate();
+               }
+            }
+        }
+        removeDate(){
+            // console.log(this.id)
+            for(var i=0;i<this.goods.length;i++){
+                if(this.goods[i].id == this.id){
+                    this.goods.splice(i,1)
+                }
+            }
+            localStorage.setItem("goods",JSON.stringify(this.goods));
+        }
+        changeDate(){
+            for(var i=0;i<this.goods.length;i++){
+                if(this.goods[i].id == this.id){
+                    this.goods[i].num = this.num;
+                }
+            }
+            localStorage.setItem("goods",JSON.stringify(this.goods));
+        }
+        init(){
+            var that = this;
+            $.ajax({
+               url:this.url,
+               success:function(res){                
+                   that.res = res;
+                   that.getDate();
+               }
+            })
+        }
+        getDate(){
+           this.goods = localStorage.getItem("goods") ? JSON.parse(localStorage.getItem("goods")) : [];
+
+        //    console.log(this.res);
+        //    console.log(this.goods);
+        this.display();
+        }
+        display(){
+              console.log(this.res);
+           console.log(this.goods); 
+        var str = ""
+            for(var i=0;i<this.res.length;i++){
+                for(var j=0;j<this.goods.length;j++){
+                    if(this.res[i].Id == this.goods[j].id){
+                        // console.log(this.res[i].Id,this.goods[j].id)
+                        str +=`
+                                <tr index="${this.res[i].Id}">
+                                <td><img src="../${this.res[i].src}" alt=""></td>
+                                    <td class="td2">${this.res[i].name}</td>
+                                    <td class="td3">${this.res[i].price}</td>
+                                    <td class="td4"><input type="number" min="1" value="${this.goods[j].num}" class="changeNum"></td>
+                                    <td class="del">删除</td>
+                                </tr>
+                                        ` 
+                    }
+                }
+            }
+            this.tbody.innerHTML = str;
+        }
+    }
+    new Shop()
+    // class Page{
+
+    //     constructor(options){
+    //         this.right = options.right;
+    //         this.left = options.left;
+    //         this.url = options.url;
+    //     }
+    // }
+    // new Page({
+    //     left:document.getElementById("btnL"),
+    //     right:document.getElementById("btnR"),
+    //     pageList:document.getElementById("pageWarp").getElementsByTagName("ul"[0]),
+    //     url:"http//localhost/1905/edianzu/da"
+    // })
+    // <input type="number"/>
+</script>
+</html>

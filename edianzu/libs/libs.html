@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="public.css">
+    <link rel="stylesheet" href="libs.css">
+    <style>
+        header{
+            width:80px;
+            height:80px;
+            background:#000;
+            margin:50px auto;
+            position: absolute;
+            top:0;
+            left:200px;
+        }
+        header a{
+            float:left;
+               font:30px/30px "";
+               color:#0a8;
+        }
+        header a.a1{
+            margin-left:10px;
+        }
+        header a img{
+           display:block; width:80px;height:80px;
+        }
+       .cont{
+           width:1113px;
+           height:660px;
+           border:1px solid #000;
+           margin:100px auto;
+           padding:10px;
+       }
+       .cont .libs_box{}
+       .cont li{
+           width:200px;
+           height:300px;
+           border:1px solid #000;
+           margin:10px;
+           float:left;
+           position: relative;
+       }
+       .cont li a{ 
+           position: absolute;
+               
+        }
+        .cont li a img{
+            display:block;
+            width:200px;
+            height:200px;
+            margin:0 auto;
+        }
+        .cont li a p{
+             width:100%;
+             height:60px;
+            font:14px/20px "";
+            margin:0 auto;
+            padding:0 5px;
+        }
+        .cont li a span{
+            display:block;
+            text-align:center;
+            color:red;
+            font-size:12px;
+        }
+       .cont .libs_box .dataBox em{
+           display:block;
+           color:#fff;
+           background:coral;
+           width:100px;
+           height:25px;
+           margin:0 auto;
+           border-radius: 5px;
+           font:16px/25px "";
+           text-align:center;
+       }
+    </style>
+</head>
+<body>
+   
+    <header>
+         <a href="../index.html"><img src="../img2/fanhui.jpg" alt=""></a>
+          <a href="../index.html" class="a1">返回首页</a>
+    </header>
+    <div class="cont">
+        <ul class="libs_box">
+            <li>
+                <a href="">
+                        <div class="dataBox" index="${this.res[i].Id}">
+                                <img src="../${this.res[i].src}">
+                                <p>${this.res[i].name}</p>
+                                <span>${this.res[i].price}</span>
+                            </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="box">
+            <div class="pagWarp" id="pageWarp">
+                <li id="btnL">上一页</li>
+                <ul>
+                </ul>
+                <li id="btnR">下一页</li>
+            </div>
+        </div>
+</body>
+<script src="../js/jquery.2.2.4.js"></script>
+<script src="libs.js"></script>
+<script>
+    class List{
+        constructor(){
+            this.box = document.querySelector(".libs_box")
+            // console.log(this.box)
+            this.url = "http://localhost/1905/edianzu/data/data.json";
+            // this.id = this.getUlParam("Id")
+            this.init()
+            this.addEvent()
+        }
+        addEvent(){
+            var that = this;
+            this.box.onclick = function(eve){
+                var e = eve || window.event;
+                var t = e.target || e.srcElement;
+                if(t.className == "addCar"){
+                    
+                    that.id = t.parentNode.getAttribute("index");
+                    console.log(this.id)
+                    that.setData();
+                }
+            }
+        }
+        init(){
+            var that = this;
+            $.ajax({
+                url:this.url,
+                success:function(res){
+                    that.res = res;
+                    that.display()
+                },
+                
+            })
+        }
+        display(){
+            console.log(this.res);
+            var str = "";
+          for(var i=0;i<this.res.length;i++){
+        str +=`
+                <li>
+                        <a href="../deta/deta.html?Id=${this.res[i].Id}">
+                            <div class="dataBox" index="${this.res[i].Id}">
+                                <img src="../${this.res[i].src}">
+                                <p>${this.res[i].name}</p>
+                                <span>${this.res[i].price}</span>
+                                <em>商品详情</em>
+                            </div>
+                        </a>
+                </li>`
+          }
+          this.box.innerHTML = str;  
+        }
+    }
+    new List;
+
+</script>
+</html>
